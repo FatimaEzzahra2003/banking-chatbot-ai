@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import joblib
 import re
+import os
 import spacy
 from sentence_transformers import SentenceTransformer
 from openai import OpenAI
@@ -16,10 +17,8 @@ model = SentenceTransformer("models/sentence_model")
 # Charger le modèle spaCy
 nlp = spacy.load("en_core_web_sm")
 
-# Initialiser OpenAI (Put your secrect key)
-client = OpenAI(api_key="")  
-
-
+# Initialiser OpenAI (clé chargée depuis une variable d'environnement)
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 # Fonction de nettoyage
 def clean_text(text):
